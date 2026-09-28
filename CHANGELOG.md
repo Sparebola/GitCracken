@@ -1,3 +1,7 @@
+# v0.7.0
+
+- Support GitKraken v12.5.0
+
 # v0.6.2 - Patches with Love :cupid:
 
 - Support GitKraken v6.5.2

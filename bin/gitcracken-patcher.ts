@@ -2,7 +2,7 @@ import chalk from "chalk";
 import * as program from "commander";
 import * as emoji from "node-emoji";
 
-import {Logo, Patcher} from "../";
+import {Logo, Patcher} from "../src";
 
 const enum Actions {
   backup = 1,
@@ -76,12 +76,12 @@ async function executeActions(actions: Actions[]) {
 
 program
   .name("gitcracken-patcher")
-  .description("GitKraken patcher")
+  .description("GitKraken local patch utility")
   .option("-a, --asar <file>", "app.asar file")
   .option("-d, --dir <dir>", "app directory")
   .option(
     "-f, --feature <value>",
-    "patcher feature",
+    "patch name",
     (val, memo) => {
       memo.push(val);
       return memo;

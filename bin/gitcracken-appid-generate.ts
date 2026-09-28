@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import * as program from "commander";
 
-import {AppId, Logo} from "../";
+import {AppId, Logo} from "../src";
 
 program
   .name("gitcracken-appid-generate")

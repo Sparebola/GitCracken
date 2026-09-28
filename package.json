@@ -2,17 +2,16 @@
   "name": "gitcracken",
   "description": "GitKraken utils for non-commercial use",
   "author": "KillWolfVlad",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "license": "MIT",
   "private": true,
   "homepage": "https://pastebin.com/u/KillWolfVlad",
-  "main": "dist/index.js",
-  "bin": {
-    "gitcracken": "dist/bin/gitcracken.js"
-  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rimraf dist && tsc",
-    "gitcracken": "node dist/bin/gitcracken.js",
+    "patcher": "tsc && node dist/bin/gitcracken.js patcher",
+    "gitcracken": "tsc && node dist/bin/gitcracken.js",
     "gitcracken:dev": "node $NODE_DEBUG_OPTION -r ts-node/register bin/gitcracken.ts",
     "lint": "tslint -p tsconfig.json"
   },
@@ -42,7 +41,7 @@
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.0.1",
-    "typescript": "^3.5.2"
+    "typescript": "^3.9.10"
   },
   "files": [
     "dist",

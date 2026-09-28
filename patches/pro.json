@@ -1,0 +1,7 @@
+[
+  {
+    "file": "src/main/static/main.bundle.js",
+    "oldText": "return JSON.parse((0,le.default)(Buffer.from(ae,\"base64\").toString(\"utf8\"),Buffer.from(se.secure,\"base64\")).toString(\"utf8\"))",
+    "newText": "var body=JSON.parse((0,le.default)(Buffer.from(ae,\"base64\").toString(\"utf8\"),Buffer.from(se.secure,\"base64\")).toString(\"utf8\"));body={...body,licensedFeatures:[\"pro\"],proAccessState:{}};return body"
+  }
+]

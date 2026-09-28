@@ -29,6 +29,12 @@ export interface IPatcherOptions {
   readonly features: string[];
 }
 
+interface IReplacementPatch {
+  readonly file: string;
+  readonly oldText: string;
+  readonly newText: string;
+}
+
 /**
  * Patcher
  */
@@ -174,12 +180,58 @@ export class Patcher {
   }
 
   private patchDirWithFeature(feature: string): void {
+    const replacementFile = path.join(baseDir, "patches", `${feature}.json`);
+    if (
+      fs.existsSync(replacementFile) &&
+      this.tryPatchDirWithReplacements(fs.readJSONSync(replacementFile))
+    ) {
+      return;
+    }
+
     const patches = diff.parsePatch(
       fs.readFileSync(path.join(baseDir, "patches", `${feature}.diff`), "utf8"),
     );
     for (const patch of patches) {
       this.patchDirWithPatch(patch);
     }
+  }
+
+  private tryPatchDirWithReplacements(patches: IReplacementPatch[]): boolean {
+    const files = new Map<string, string>();
+    for (const patch of patches) {
+      const file = path.join(this.dir, patch.file);
+      if (!fs.existsSync(file) || !patch.oldText) {
+        return false;
+      }
+      const source = files.has(file)
+        ? files.get(file)!
+        : fs.readFileSync(file, "utf8");
+      const firstMatch = source.indexOf(patch.oldText);
+      if (firstMatch === -1) {
+        const alreadyPatched = source.indexOf(patch.newText);
+        if (
+          !patch.newText ||
+          alreadyPatched === -1 ||
+          source.indexOf(
+            patch.newText,
+            alreadyPatched + patch.newText.length,
+          ) !== -1
+        ) {
+          return false;
+        }
+        continue;
+      }
+      if (
+        source.indexOf(patch.oldText, firstMatch + patch.oldText.length) !== -1
+      ) {
+        return false;
+      }
+      files.set(file, source.replace(patch.oldText, patch.newText));
+    }
+    for (const [file, source] of files) {
+      fs.writeFileSync(file, source, "utf8");
+    }
+    return true;
   }
 
   private patchDirWithPatch(patch: diff.ParsedDiff): void {

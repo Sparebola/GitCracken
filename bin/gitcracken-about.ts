@@ -1,6 +1,6 @@
 import * as program from "commander";
 
-import {Logo} from "../";
+import {Logo} from "../src";
 
 program
   .name("gitcracken-about")

@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import * as program from "commander";
 
-import {AppId, Logo, SecFile} from "../";
+import {AppId, Logo, SecFile} from "../src";
 
 program
   .name("gitcracken-secfile")

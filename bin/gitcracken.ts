@@ -10,6 +10,6 @@ program
   .description(packageJson.description)
   .command("about", "about GitCracken")
   .command("appid", "GitKraken AppId")
-  .command("patcher [actions...]", "GitKraken patcher")
+  .command("patcher [actions...]", "GitKraken local patch utility")
   .command("secfile [files...]", "read GitKraken secFile")
   .parse(process.argv);
